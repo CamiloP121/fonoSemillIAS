@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.signal import butter, sosfilt
+from scipy.signal import wiener
+
 
 from fonoSemillIAS.preproc.helpers import plot_filter_response
 
@@ -91,4 +93,17 @@ def band_stop_filter(signal: np.array, fs: int, low_cutoff_freq: int, high_cutof
     if plot:
         plot_filter_response(sos, fs, "Band-stop Filter")
     
+    return filtered_signal
+
+def adaptive_filter(signal: np.array) -> np.array:
+    """
+    Applies adaptive filtering to a given signal using Wiener filter.
+
+    Args:
+    - signal (np.array): Input signal
+
+    Returns:
+    - np.array: Filtered signal
+    """
+    filtered_signal = wiener(signal)
     return filtered_signal

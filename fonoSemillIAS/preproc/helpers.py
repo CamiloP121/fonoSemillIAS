@@ -35,3 +35,28 @@ def plot_filter_response(sos, fs, title):
     plt.ylabel('Amplitude [dB]')
     plt.grid(True)
     plt.show()
+
+def get_fundamental_frequency(signal, fs):
+    """
+    Calculate the fundamental frequency of a voice signal.
+
+    Args:
+    - signal (np.array): The voice signal.
+    - fs (int): The sampling frequency of the signal.
+
+    Returns:
+    - float: The estimated fundamental frequency.
+    """
+    # Calculate the autocorrelation of the signal
+    autocorr = np.correlate(signal, signal, mode='full')
+
+    # Find the first maximum after the first minimum (remove DC)
+    first_min_index = np.argmax(autocorr)
+    autocorr = autocorr[first_min_index:]
+
+    # Find the second maximum (fundamental frequency) after the first maximum
+    fundamental_index = np.argmax(autocorr[1:]) + 1
+
+    # Calculate the fundamental frequency in Hz
+    fundamental_freq = fs / fundamental_index
+    return fundamental_freq
