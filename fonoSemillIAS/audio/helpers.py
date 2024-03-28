@@ -42,3 +42,34 @@ def plot_sounds(signals:list, labels:list,time:np.array, tittle:str):
 def play_sound(amplitude: np.array, fs: int):
     wn = Audio(data = amplitude, rate = fs)
     display(wn)
+
+
+def add_noise_and_echo(signal, noise_level, echo_delay, echo_decay):
+    """
+    Add ambient noise and echo to an audio signal.
+
+    Args:
+    - signal (np.array): The input audio signal.
+    - noise_level (float): The level of ambient noise to be added.
+    - echo_delay (int): The delay (in samples) of the echo effect.
+    - echo_decay (float): The decay factor of the echo effect.
+
+    Returns:
+    - np.array: The audio signal with noise and echo added.
+    """
+    # Generate ambient noise
+    noise = np.random.normal(0, noise_level, len(signal))
+
+    # Add noise to the signal
+    noisy_signal = signal + noise
+
+    # Generate echo effect
+    echo = np.zeros_like(signal)
+    echo[:echo_delay] = noisy_signal[:echo_delay]
+    for i in range(echo_delay, len(signal)):
+        echo[i] = noisy_signal[i] + echo_decay * echo[i - echo_delay]
+
+    # Combine original signal with noise and echo
+    signal_with_noise_and_echo = signal + noise + echo
+
+    return signal_with_noise_and_echo
