@@ -1,0 +1,10 @@
+# Ignore directories to github repositories
+
+test/
+temp/
+
+__pycache__/
+
+audios_test/
+
+test.py
