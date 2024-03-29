@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
-from audio.helpers import plot_sound, play_sound
+from fonoSemillIAS.audio.helpers import plot_sound, play_sound
 
 class Audio():
   def __init__(self, file_path:str, debug: bool = False):
