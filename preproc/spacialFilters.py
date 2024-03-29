@@ -3,7 +3,7 @@ from scipy.signal import butter, sosfilt
 from scipy.signal import wiener
 
 
-from fonoSemillIAS.preproc.helpers import plot_filter_response
+from preproc.helpers import plot_filter_response
 
 def band_pass_filter(signal: np.array, fs: int, low_cutoff_freq: int, high_cutoff_freq: int, plot=False):
     """
