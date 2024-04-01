@@ -41,24 +41,25 @@ def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1, plot = False
     Apply discrete wavelet transform (DWT) and filtering to the signal.
 
     Args:
-    - signal (np.array): The input audio signal.
+    - signal (np.array): The input signal.
     - wavelet (str): The type of wavelet to use (default is 'db6').
     - level (int): The level of decomposition (default is 1).
     - threshold_value (float): The threshold value for thresholding.
-    - Plot: Show diference between coff before and after filtering
+    - plot (bool): Show the difference between coefficients before and after filtering.
 
     Returns:
     - np.array: The reconstructed signal after applying DWT and filtering.
     """
     # Apply DWT
     coeffs = pywt.wavedec(signal, wavelet, level=level)
-    # Filtrar los coeficientes de detalle
+    
+    # Filter detail coefficients
     filtered_coeffs = [pywt.threshold(detail_coef, threshold_value * max(detail_coef)) for detail_coef in coeffs[1:]]
 
     # Reconstruct the signal from the filtered coefficients
-    reconstructed_signal = pywt.waverec(filtered_coeffs, wavelet)
+    print(len(filtered_coeffs), len(coeffs))
+    reconstructed_signal = pywt.waverec([coeffs[0]] + filtered_coeffs, wavelet)
 
     if plot: plot_coeffs(original_coeffs=coeffs, filtered_coeffs=filtered_coeffs)
-
 
     return reconstructed_signal, [coeffs, filtered_coeffs]
