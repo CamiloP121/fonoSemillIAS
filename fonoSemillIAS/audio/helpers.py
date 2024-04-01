@@ -57,6 +57,6 @@ def add_noise(signal, noise_level):
     # Generate ambient noise
     noise = np.random.normal(0, noise_level, len(signal))
 
-    signal += 0.5 * noise
+    signal += noise
 
     return signal

@@ -3,6 +3,8 @@ from sklearn.decomposition import PCA
 import noisereduce as nr # Filter
 import pywt
 
+from fonoSemillIAS.preproc.helpers import plot_coeffs
+
 def pca_decomposition(signal: np.array, n_components: int) -> np.array:
     """
     Applies Principal Component Analysis (PCA) decomposition to a given signal.
@@ -34,16 +36,16 @@ def nrp_filter(signal:np.array, fs:int, torch: bool = False):
 
     return reduced_noise_torch
 
-def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1):
+def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1, plot = False):
     """
     Apply discrete wavelet transform (DWT) and filtering to the signal.
 
     Args:
     - signal (np.array): The input audio signal.
-    - wavelet (str): The type of wavelet to use (default is 'db4').
+    - wavelet (str): The type of wavelet to use (default is 'db6').
     - level (int): The level of decomposition (default is 1).
-    - threshold_type (str): The type of thresholding to apply ('soft' or 'hard').
     - threshold_value (float): The threshold value for thresholding.
+    - Plot: Show diference between coff before and after filtering
 
     Returns:
     - np.array: The reconstructed signal after applying DWT and filtering.
@@ -55,5 +57,8 @@ def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1):
 
     # Reconstruct the signal from the filtered coefficients
     reconstructed_signal = pywt.waverec(filtered_coeffs, wavelet)
+
+    if plot: plot_coeffs(original_coeffs=coeffs, )
+
 
     return reconstructed_signal, [coeffs, filtered_coeffs]
