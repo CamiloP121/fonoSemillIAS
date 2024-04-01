@@ -57,6 +57,7 @@ class Audio():
       amplitude = np.mean(amplitude, axis=1, dtype=int)
 
     duration = len(amplitude) / fs
+    amplitude = amplitude / max(amplitude)
     return fs, amplitude, channels, duration
 
   def get_info(self):
