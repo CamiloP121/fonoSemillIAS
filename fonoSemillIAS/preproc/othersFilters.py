@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.decomposition import PCA
 import noisereduce as nr # Filter
+import pywt
 
 def pca_decomposition(signal: np.array, n_components: int) -> np.array:
     """
@@ -32,3 +33,27 @@ def nrp_filter(signal:np.array, fs:int, torch: bool = False):
                                use_torch=torch)
 
     return reduced_noise_torch
+
+def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1):
+    """
+    Apply discrete wavelet transform (DWT) and filtering to the signal.
+
+    Args:
+    - signal (np.array): The input audio signal.
+    - wavelet (str): The type of wavelet to use (default is 'db4').
+    - level (int): The level of decomposition (default is 1).
+    - threshold_type (str): The type of thresholding to apply ('soft' or 'hard').
+    - threshold_value (float): The threshold value for thresholding.
+
+    Returns:
+    - np.array: The reconstructed signal after applying DWT and filtering.
+    """
+    # Apply DWT
+    coeffs = pywt.wavedec(signal, wavelet, level=level)
+    # Filtrar los coeficientes de detalle
+    filtered_coeffs = [pywt.threshold(detail_coef, threshold_value * max(detail_coef)) for detail_coef in coeffs[1:]]
+
+    # Reconstruct the signal from the filtered coefficients
+    reconstructed_signal = pywt.waverec(filtered_coeffs, wavelet)
+
+    return reconstructed_signal, [coeffs, filtered_coeffs]
