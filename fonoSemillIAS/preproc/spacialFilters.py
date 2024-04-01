@@ -5,7 +5,7 @@ from scipy.signal import wiener
 
 from fonoSemillIAS.preproc.helpers import plot_filter_response
 
-def band_pass_filter(signal: np.array, fs: int, low_cutoff_freq: int, high_cutoff_freq: int, plot=False):
+def band_pass_filter(signal: np.array, fs: int ,low_cutoff_freq: int, high_cutoff_freq: int, order:int = 20,output:str = "sos", plot=False):
     """
     Applies a band-pass filter to a given signal
 
@@ -19,7 +19,7 @@ def band_pass_filter(signal: np.array, fs: int, low_cutoff_freq: int, high_cutof
     Returns:
     - np.array: Filtered signal
     """
-    sos = butter(20, [low_cutoff_freq, high_cutoff_freq], 'bandpass', fs=fs, output="sos")
+    sos = butter(order, [low_cutoff_freq, high_cutoff_freq], 'bandpass', fs=fs, output=output)
     filtered_signal = sosfilt(sos, signal)
     
     window_size = 3
