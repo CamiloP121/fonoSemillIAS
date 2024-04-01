@@ -20,7 +20,7 @@ def pca_decomposition(signal: np.array, n_components: int) -> np.array:
     transformed_signal = pca.fit_transform(signal)
     return transformed_signal
 
-def nrp_filter(signal:np.array, fs:int, torch: bool = False):
+def nrp_filter(signal:np.array, fs:int, std_tresh:int, torch: bool = False):
     """
     Apply a noise reduction filter on the provided audio signal
     ------------------------------------------------------------
@@ -31,7 +31,7 @@ def nrp_filter(signal:np.array, fs:int, torch: bool = False):
     Returns:
     - reduced_noise_torch (np.array): The audio signal with reduced noise.
     """
-    reduced_noise_torch = nr.reduce_noise(y = signal , sr = fs, n_std_thresh_stationary=1.5,stationary=True,
+    reduced_noise_torch = nr.reduce_noise(y = signal , sr = fs, n_std_thresh_stationary = std_tresh,stationary=True,
                                use_torch=torch)
 
     return reduced_noise_torch
