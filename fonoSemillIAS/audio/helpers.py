@@ -44,33 +44,19 @@ def play_sound(amplitude: np.array, fs: int):
     display(wn)
 
 
-def add_noise(signal, noise_level, echo_delay, echo_decay, voice_attenuation_factor):
+def add_noise(signal, noise_level):
     """
     Add ambient noise and echo to an audio signal and attenuate voice.
 
     Args:
     - signal (np.array): The input audio signal.
     - noise_level (float): The level of ambient noise to be added.
-    - echo_delay (int): The delay (in milliseconds) of the echo effect.
-    - echo_decay (float): The decay factor of the echo effect.
-    - voice_attenuation_factor (float): The attenuation factor for the voice (0 for complete silence, 1 for no attenuation).
-
     Returns:
-    - np.array: The audio signal with noise, echo, and attenuated voice.
+    - np.array: The audio signal with noise
     """
     # Generate ambient noise
     noise = np.random.normal(0, noise_level, len(signal))
 
-    # Generate echo
-    echo = np.zeros_like(signal)
-    echo[:echo_delay] = signal[:echo_delay]
-    for i in range(echo_delay, len(signal)):
-        echo[i] = signal[i] + echo_decay * echo[i - echo_delay]
+    signal += 0.5 * noise
 
-    # Attenuate voice
-    attenuated_signal = signal - (voice_attenuation_factor * signal)
-
-    # Add noise, echo, and attenuated voice
-    signal_with_noise_echo_and_attenuated_voice = attenuated_signal + noise + echo
-
-    return signal_with_noise_echo_and_attenuated_voice
+    return signal
