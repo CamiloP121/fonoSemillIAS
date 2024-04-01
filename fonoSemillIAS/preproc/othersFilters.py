@@ -58,7 +58,7 @@ def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1, plot = False
     # Reconstruct the signal from the filtered coefficients
     reconstructed_signal = pywt.waverec(filtered_coeffs, wavelet)
 
-    if plot: plot_coeffs(original_coeffs=coeffs, )
+    if plot: plot_coeffs(original_coeffs=coeffs, filtered_coeffs=filtered_coeffs)
 
 
     return reconstructed_signal, [coeffs, filtered_coeffs]
