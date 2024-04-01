@@ -57,9 +57,18 @@ def DWT_filter(signal, wavelet='db6', level=5, threshold_value=0.1, plot = False
     filtered_coeffs = [pywt.threshold(detail_coef, threshold_value * max(detail_coef)) for detail_coef in coeffs[1:]]
 
     # Reconstruct the signal from the filtered coefficients
-    print(len(filtered_coeffs), len(coeffs))
     reconstructed_signal = pywt.waverec([coeffs[0]] + filtered_coeffs, wavelet)
 
     if plot: plot_coeffs(original_coeffs=coeffs, filtered_coeffs=filtered_coeffs)
 
     return reconstructed_signal, [coeffs, filtered_coeffs]
+
+def normalize_audio_to_dBFS(audio_data, target_dBFS):
+    # Calcular el nivel actual de dBFS del audio
+    current_dBFS = 20 * np.log10(np.max(np.abs(audio_data)) / (2**15))
+    # Calcular el factor de normalización
+    normalization_factor = 10 ** ((target_dBFS - current_dBFS) / 20)
+    # Normalizar el audio multiplicando por el factor de normalización
+    normalized_audio_data = (audio_data.astype(np.float32) * normalization_factor).astype(np.int16)
+    
+    return normalized_audio_data
