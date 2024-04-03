@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.io import wavfile
 from IPython.display import Audio
 
 def plot_sound(time:np.array, amplitude: np.array, name: str) -> None:
@@ -60,3 +61,18 @@ def add_noise(signal, noise_level):
     signal_noise = signal + noise
 
     return signal_noise
+
+def save_audio(signal:np.array, fs:int, file_name:str = "tmp_wav.wav"):
+  """
+  Save an audio signal to a .wav file.
+
+  Parameters:
+  - signal (np.array): The audio signal to be saved
+  - fs (int): The sample rate of the audio signal.
+  - file_name (str, optional): The desired file name and path for the saved audio. Default is "tmp_wav.wav".
+
+  Returns:
+  None
+  """
+  wavfile.write(file_name, fs, np.int16(signal/np.max(np.abs(signal)) * 32767))
+  print(f"Audio was successfully saved as {file_name}")
