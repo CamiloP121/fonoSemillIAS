@@ -3,9 +3,9 @@ from scipy.signal import sosfreqz
 import numpy as np
 import matplotlib.pyplot as plt
 
-from fonoSemillIAS.preproc.othersFilters import DWT_filter
-from fonoSemillIAS.preproc.othersFilters import nrp_filter
-from fonoSemillIAS.preproc.temporalFilters import median_filter
+from othersFilters import DWT_filter
+from othersFilters import nrp_filter
+from temporalFilters import median_filter
 
 
 def fft(signal:np.array, fs:float, show:bool = False):
@@ -116,3 +116,6 @@ def apply_preproc(signal, fs, torch):
       raise Exception("Error in preprocessing")
   
   return signal_pb
+
+if __name__ == "__main__":
+   print("s")
