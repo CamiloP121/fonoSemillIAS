@@ -39,26 +39,26 @@ def apply_energy_silences(signal, fs, window_ms=5, output="intervals"):
 
         # Step 3: Envelogram
         tqdm.write("Start step 3: Envelogram")
-        envelogram = envelogram(average_energy_sequence = average_energy)
+        envelogram_wave = envelogram(average_energy_sequence = average_energy)
         # Update progress bar
         progress_bar.update(1)
 
         # Step 4: Detection of silences
         ## Sub-step 4.1: Zero crossing
         tqdm.write("Start step 4.1: Zero crossing")
-        zero_crossing = find_zero_crossings(envelogram = envelogram)
+        zero_crossing = find_zero_crossings(envelogram = envelogram_wave)
         # Update progress bar
         progress_bar.update(1)
 
         ## Sub-step 4.2: Identify lobes
         tqdm.write("Start step 4.2: Identify lobes")
-        lobe_indices = identify_lobes(envelogram = envelogram, zero_crossings = zero_crossing)
+        lobe_indices = identify_lobes(envelogram = envelogram_wave, zero_crossings = zero_crossing)
         # Update progress bar
         progress_bar.update(1)
 
         ## Sub-step 4.3: Transform silence lobes into pulse
         tqdm.write("Start step 4.3: Transform silence lobes into pulse")
-        intervals, pulse = silence_pulse(envelogram = envelogram, lobe_indices = lobe_indices)
+        intervals, pulse = silence_pulse(envelogram = envelogram_wave, lobe_indices = lobe_indices)
         # Update progress bar
         progress_bar.update(1)
 
