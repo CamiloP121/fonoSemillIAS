@@ -26,9 +26,7 @@ def avr_energy(energy_sequence, window_move):
     - average_energy (array): The calculated continuous average energy.
     """
     # Calculate the number of samples that overlap between consecutive windows
-    print(window_move)
     window_move = window_move // 2
-    print(window_move)
     # Initialize the index to start the window
     start_index = 0
     average_energy, t = [], []
@@ -54,7 +52,6 @@ def envelogram(average_energy_sequence):
     """
     mean = np.mean(average_energy_sequence)
     standard_deviation = np.std(average_energy_sequence)
-    print(mean, standard_deviation)
     return (average_energy_sequence - mean) / standard_deviation
 
 def find_zero_crossings(envelogram):
