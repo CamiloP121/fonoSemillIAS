@@ -87,7 +87,7 @@ def identify_lobes(envelogram, zero_crossings):
     lobe_indices.append((start_idx, len(envelogram) - 1))
     return lobe_indices
 
-def silence_pulse(envelogram, lobe_indices):
+def identify_silence(envelogram, lobe_indices):
     """
     Identify and mark regions of silence in an envelogram.
 
@@ -99,13 +99,11 @@ def silence_pulse(envelogram, lobe_indices):
     - intervals (list of tuples): List of tuples (i, j) where the mean value of the lobe is negative.
     - pulse (array): Array marking the regions of silence with 1.
     """
-    pulse = np.zeros_like(envelogram)
     intervals = []
 
     for start_index, final_index in lobe_indices:
         arr = envelogram[start_index:final_index]
         if np.mean(arr) < 0:
             intervals.append((start_index, final_index))
-            pulse[start_index:final_index] = 1
 
-    return intervals, pulse
+    return intervals

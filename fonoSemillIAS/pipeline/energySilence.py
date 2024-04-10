@@ -1,5 +1,6 @@
 from tqdm import tqdm
 from fonoSemillIAS.Silence.activateEnergy import *
+from fonoSemillIAS.others.process_result import *
 
 def apply_energy_silences(signal, fs, window_ms=5, output="intervals"):
     """
@@ -58,7 +59,10 @@ def apply_energy_silences(signal, fs, window_ms=5, output="intervals"):
 
         ## Sub-step 4.3: Transform silence lobes into pulse
         tqdm.write("Start step 4.3: Transform silence lobes into pulse")
-        intervals, pulse = silence_pulse(envelogram = envelogram_wave, lobe_indices = lobe_indices)
+        intervals = identify_silence(envelogram = envelogram_wave, lobe_indices = lobe_indices)
+        pulse = create_pulse(signal_ref = envelogram_wave, 
+                             array_sample_start = [value[0] for value in intervals], 
+                             array_sample_end = [value[1] for value in intervals])
         # Update progress bar
         progress_bar.update(1)
 
@@ -67,11 +71,12 @@ def apply_energy_silences(signal, fs, window_ms=5, output="intervals"):
 
         # Return output based on specified format
         if output == "intervals":
-            return {"intervals_silence": intervals}
+            return {"intervals_silence": intervals,
+                    "pulse": pulse}
         elif output == "all":
             return {"intervals_silence": intervals,
                     "pulse": pulse,
-                    "envelogram": envelogram,
+                    "envelogram": envelogram_wave,
                     "intervals_all": lobe_indices}
 
     except Exception as e:
