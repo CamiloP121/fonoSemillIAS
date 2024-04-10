@@ -6,7 +6,7 @@ from omegaconf import OmegaConf
 import shutil
 import json
 
-from utils import print_helpers as pp
+from fonoSemillIAS.others import print_helpers as pp
 
 class DiarizationAsr():
     def __init__(self, work_path: str, conf_infence:str, 
