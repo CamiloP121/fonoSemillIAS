@@ -45,10 +45,6 @@ def apply_silero_silences(SVAD, filename, wav):
         arr_time_start, arr_time_end, diff = sample2time(array_sample_start = data_silence["start_sample"].values, 
                                                          array_sample_end = data_silence["end_sample"].values, 
                                                          fs = wav.fs)
-        
-        pulse_detec = create_pulse(signal_ref = wav.amplitude, 
-                                   array_sample_start = data_silence["start_sample"].values, 
-                                   array_sample_end = data_silence["end_sample"].values)
 
         data_silence["start_time"] = arr_time_start
         data_silence["end_time"] = arr_time_end
@@ -56,6 +52,10 @@ def apply_silero_silences(SVAD, filename, wav):
         data_silence = data_silence[data_silence["diff_time"] >= 0.2]
         data_silence = data_silence.reset_index(drop = True)
         data_silence["new_silences"] = [True] * len(data_silence)
+
+        pulse_detec = create_pulse(signal_ref = wav.amplitude, 
+                                   array_sample_start = data_silence["start_sample"].values, 
+                                   array_sample_end = data_silence["end_sample"].values)
 
         progress_bar.update(1)
         # Close progress bar
