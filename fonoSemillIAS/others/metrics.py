@@ -39,12 +39,12 @@ def deltas_lobes(df_tag_silences, data_detec_silence):
         for j in range(len(data_detec_silence)):
             dect = data_detec_silence.iloc[j]
             if tg.start_sample <= dect.end_sample and dect.end_sample <= tg.end_sample:
-                delta_end.append(  tg.end_sample - dect.end_sample )
+                delta_end.append(  tg.end_time - dect.end_time )
             elif dect.start_sample <= tg.end_sample and tg.end_sample <= dect.end_sample:
-                delta_end.append(  dect.end_sample - tg.end_sample  )
+                delta_end.append(  dect.end_time - tg.end_time  )
             elif dect.start_sample > tg.end_sample: 
                 break
-            
+
         if len(delta_end) < i + 1: 
             delta_end.append("inf")
 
