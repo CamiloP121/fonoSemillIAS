@@ -24,8 +24,10 @@ def deltas_lobes(df_tag_silences, data_detec_silence):
             dect = data_detec_silence.iloc[j]
             if tg.start_sample <= dect.start_sample and dect.start_sample <= tg.end_sample:
                 delta_start.append(  dect.start_time - tg.start_time )
+                break
             elif dect.start_sample <= tg.start_sample and tg.start_sample <= dect.end_sample:
                 delta_start.append(  tg.start_time - dect.start_time )
+                break
             elif dect.start_sample > tg.end_sample: 
                 break
 
@@ -40,8 +42,10 @@ def deltas_lobes(df_tag_silences, data_detec_silence):
             dect = data_detec_silence.iloc[j]
             if tg.start_sample <= dect.end_sample and dect.end_sample <= tg.end_sample:
                 delta_end.append(  tg.end_time - dect.end_time )
+                break
             elif dect.start_sample <= tg.end_sample and tg.end_sample <= dect.end_sample:
                 delta_end.append(  dect.end_time - tg.end_time  )
+                break
             elif dect.start_sample > tg.end_sample: 
                 break
 
