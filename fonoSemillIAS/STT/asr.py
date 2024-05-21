@@ -1,7 +1,7 @@
 import nemo.collections.asr as nemo_asr
 from omegaconf import OmegaConf, open_dict
 
-from utils import print_helpers as pp
+from fonoSemillIAS.others import print_helpers as pp
 
 class NeMo_ASR():
     def __init__(self, name_model:str, debug: bool = False) -> None:
@@ -37,11 +37,11 @@ class NeMo_ASR():
         
         return asr_model
 
-    def apply(self, file:str):
+    def apply(self, files:list):
         if self.debug: pp.printc("\t Start ASR process")
         # specify flag `return_hypotheses=True``
         try:
-            hypotheses = self.model.transcribe([ file ], return_hypotheses=True)
+            hypotheses = self.model.transcribe(files , return_hypotheses=True)
         except Exception as e:
             print(e)
             raise Exception("Error apply ASR and Hypotheses timestamps")
