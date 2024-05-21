@@ -65,5 +65,12 @@ class WhisperASR():
     def apply(self, file_path: str, generate_kwargs: dict):
 
         assert self.pipe is not None, "Empty pipeline"
-
+        if self.debug: pp.printc("\t Start ASR process")
         result = self.pipe(file_path, generate_kwargs= generate_kwargs)
+
+        if self.debug: 
+            print("\tFinish ASR")
+            for k, i in result.items():
+                print(f"{k.upper()}: {i}")
+
+        return result
