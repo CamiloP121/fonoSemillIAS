@@ -64,6 +64,6 @@ class WhisperASR():
         
     def apply(self, file_path: str, generate_kwargs: dict):
 
-        assert self.pipe is None, "Empty pipeline"
+        assert self.pipe is not None, "Empty pipeline"
 
         result = self.pipe(file_path, generate_kwargs= generate_kwargs)
