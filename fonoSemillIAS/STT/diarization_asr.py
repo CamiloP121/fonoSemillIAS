@@ -103,7 +103,7 @@ class DiarizationAsr():
             'duration':None,
             'label': 'infer',
             'text': '-',
-            'num_speakers': None,
+            'num_speakers': 2,
             'rttm_filepath': None,
             'uem_filepath' : None
         }
