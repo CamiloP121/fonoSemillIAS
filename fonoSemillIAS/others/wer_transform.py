@@ -1,7 +1,7 @@
 from jiwer import AbstractTransform
 import unidecode
 
-class Normalize(AbstractTransform):
+class StringToAscii(AbstractTransform):
     """
     Normalizes the string to ASCII.
 
