@@ -17,7 +17,7 @@ class Wav2Vec2ASR():
         if self.debug:
             pp.printy("Start create Whisper Model")
         try:
-            model =  Wav2Vec2ForCTC.from_pretrained(self.model_id)
+            model = Wav2Vec2ForCTC.from_pretrained(self.model_id)
 
             processor = Wav2Vec2Processor.from_pretrained(self.model_id)
 
