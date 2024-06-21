@@ -61,7 +61,7 @@ def apply_silero_silences(SVAD, filename, wav):
         # Close progress bar
         progress_bar.close()
 
-        return data_silence, pulse_detec
+        return data_silence, pulse_detec, df
 
     except Exception as e:
         print(e)
